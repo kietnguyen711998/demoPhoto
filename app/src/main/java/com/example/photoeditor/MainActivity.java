@@ -41,7 +41,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FiltersListFragmentListener, EditImageFragmentListener {
 
-    public static final String pictureName = "flash.jpg";
+    public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
 
     ImageView img_preview;
