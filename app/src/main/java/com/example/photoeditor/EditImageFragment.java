@@ -21,6 +21,10 @@ public class EditImageFragment extends Fragment implements SeekBar.OnSeekBarChan
     private EditImageFragmentListener listener;
     SeekBar seekbar_brightness, seekbar_constraint, seekbar_saturation;
 
+    public void setListener(EditImageFragmentListener listener) {
+        this.listener = listener;
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String pictureName = "flash.jpg";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

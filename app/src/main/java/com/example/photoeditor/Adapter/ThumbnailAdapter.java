@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photoeditor.FiltersListFragment;
-import com.example.photoeditor.Interface.FilterListFragmentListener;
 import com.example.photoeditor.R;
 import com.zomato.photofilters.utils.ThumbnailItem;
 
@@ -25,7 +24,7 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailAdapter.MyVi
     private Context context;
     private int selectedIndex = 0;
 
-    public ThumbnailAdapter(List<ThumbnailItem> thumbnailItems, FilterListFragmentListener listener, Context context) {
+    public ThumbnailAdapter(List<ThumbnailItem> thumbnailItems, FiltersListFragment listener, Context context) {
         this.thumbnailItems = thumbnailItems;
         this.listener = listener;
         this.context = context;
