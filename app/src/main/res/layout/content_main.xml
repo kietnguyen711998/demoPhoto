@@ -98,6 +98,39 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_brush"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/card_background_color"
+                app:cardElevation="8dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp">
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_brush_white_24"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="Brush"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
     </HorizontalScrollView>
