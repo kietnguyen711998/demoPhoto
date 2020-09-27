@@ -20,7 +20,7 @@ import java.util.List;
 public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailAdapter.MyViewBolder> {
 
     private List<ThumbnailItem> thumbnailItems;
-    private FilterListFragmentListener listener;
+    private FiltersListFragment listener;
     private Context context;
     private int selectedIndex = 0;
 
