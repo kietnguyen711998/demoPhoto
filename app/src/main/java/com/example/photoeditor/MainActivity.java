@@ -135,4 +135,13 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         img_preview.setImageBitmap(filter.processFilter(filteredBitmap));
         finalBitmap = filteredBitmap.copy(Bitmap.Config.ARGB_8888, true);
     }
+
+    private void resetControl() {
+        if (editImageFragment == null)
+            editImageFragment.resetControls();
+
+        brightnessfinal = 0;
+        saturationfinal = 1.0f;
+        constraintfinal = 1.0f;
+    }
 }
