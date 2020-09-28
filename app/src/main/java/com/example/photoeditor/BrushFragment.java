@@ -95,7 +95,7 @@ public class BrushFragment extends BottomSheetDialogFragment implements ColorAda
         View itemView = inflater.inflate(R.layout.fragment_brush, container, false);
 
         seekBar_brush_size = (SeekBar)itemView.findViewById(R.id.seekbar_brush_size);
-        seekBar_opacity_size = (SeekBar)itemView.findViewById(R.id.seekbar_brush_size);
+        seekBar_opacity_size = (SeekBar)itemView.findViewById(R.id.seekbar_brush_opacity);
         btn_brush_state = (ToggleButton)itemView.findViewById(R.id.btn_brush_state);
         recycler_color = (RecyclerView) itemView.findViewById(R.id.recycler_color);
         recycler_color.setHasFixedSize(true);
