@@ -16,6 +16,12 @@
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_font"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_color"
         android:layout_width="match_parent"
         android:layout_height="80dp"/>

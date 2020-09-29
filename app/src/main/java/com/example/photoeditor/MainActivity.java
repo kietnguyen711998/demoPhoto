@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -375,7 +376,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     }
 
     @Override
-    public void onAddTextButtonClick(String text, int color) {
-        photoEditor.addText(text,color);
+    public void onAddTextButtonClick(Typeface typeface, String text, int color) {
+        photoEditor.addText(typeface,text,color);
     }
 }
