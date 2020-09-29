@@ -79,8 +79,9 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Photo Editor");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setTitle("PhotoEditor");
+        getSupportActionBar().setIcon(R.drawable.ic_app_logo);
 
         photoEditorView = (PhotoEditorView) findViewById(R.id.image_preview);
         photoEditor = new PhotoEditor.Builder(this, photoEditorView).setPinchTextScalable(true).build();
