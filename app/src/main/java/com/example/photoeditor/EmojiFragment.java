@@ -48,7 +48,6 @@ public class EmojiFragment extends BottomSheetDialogFragment implements EmojiAda
     }
 
     public EmojiFragment() {
-        // Required empty public constructor
     }
 
     /**

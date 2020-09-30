@@ -40,8 +40,8 @@
                 android:padding="16dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/card_background_color"
-                android:layout_width="65dp"
-                android:layout_height="65dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
             <LinearLayout
                 android:layout_gravity="center_vertical|center_horizontal"
@@ -74,8 +74,8 @@
                 android:padding="16dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/card_background_color"
-                android:layout_width="65dp"
-                android:layout_height="65dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <LinearLayout
                     android:layout_gravity="center_vertical|center_horizontal"
@@ -108,8 +108,8 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="65dp"
-                android:layout_height="65dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <LinearLayout
                     android:layout_gravity="center_vertical|center_horizontal"
@@ -142,8 +142,8 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="65dp"
-                android:layout_height="65dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <LinearLayout
                     android:layout_gravity="center_vertical|center_horizontal"
@@ -176,8 +176,8 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="65dp"
-                android:layout_height="65dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <LinearLayout
                     android:layout_gravity="center_vertical|center_horizontal"
