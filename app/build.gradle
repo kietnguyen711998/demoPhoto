@@ -36,4 +36,5 @@ dependencies {
     implementation 'info.androidhive:imagefilters:1.0.7'
     implementation 'ja.burhanrashid52:photoeditor:0.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'io.github.rockerhieu:emojiconize:1.0.0'
 }

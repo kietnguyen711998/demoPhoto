@@ -26,6 +26,7 @@ import com.example.photoeditor.Adapter.ViewPagerAdapter;
 import com.example.photoeditor.Interface.AddTextFragmentListener;
 import com.example.photoeditor.Interface.BrushFragmentListener;
 import com.example.photoeditor.Interface.EditImageFragmentListener;
+import com.example.photoeditor.Interface.EmojiFragmentListener;
 import com.example.photoeditor.Interface.FiltersListFragmentListener;
 import com.example.photoeditor.Utils.BitmapUtils;
 import com.google.android.material.snackbar.Snackbar;
@@ -47,7 +48,7 @@ import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
-public class MainActivity extends AppCompatActivity implements FiltersListFragmentListener, EditImageFragmentListener, BrushFragmentListener, AddTextFragmentListener {
+public class MainActivity extends AppCompatActivity implements FiltersListFragmentListener, EditImageFragmentListener, BrushFragmentListener, AddTextFragmentListener, EmojiFragmentListener {
 
     public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     FiltersListFragment filtersListFragment;
     EditImageFragment editImageFragment;
 
-    CardView btn_filters_list, btn_edit,btn_brush, btn_text;
+    CardView btn_filters_list, btn_edit,btn_brush,btn_emoji , btn_text;
 
     int brightnessfinal = 0;
     float saturationfinal = 1.0f;
@@ -84,7 +85,10 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         getSupportActionBar().setIcon(R.drawable.ic_app_logo);
 
         photoEditorView = (PhotoEditorView) findViewById(R.id.image_preview);
-        photoEditor = new PhotoEditor.Builder(this, photoEditorView).setPinchTextScalable(true).build();
+        photoEditor = new PhotoEditor.Builder(this, photoEditorView)
+                .setPinchTextScalable(true)
+                .setDefaultEmojiTypeface(Typeface.createFromAsset(getAssets(),"emojione-android.ttf"))
+                .build();
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
@@ -93,7 +97,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         btn_edit = (CardView)findViewById(R.id.btn_edit);
         btn_brush = (CardView)findViewById(R.id.btn_brush);
         btn_text = (CardView)findViewById(R.id.btn_text);
-
+        btn_emoji = (CardView)findViewById(R.id.btn_emoji);
+        
 
         btn_filters_list.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +136,15 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
                 AddTextFragment addTextFragment = AddTextFragment.getInstance();
                 addTextFragment.setListener(MainActivity.this);
                 addTextFragment.show(getSupportFragmentManager(),addTextFragment.getTag());
+            }
+        });
+
+        btn_emoji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EmojiFragment emojiFragment = EmojiFragment.getInstance();
+                emojiFragment.setListener(MainActivity.this);
+                emojiFragment.show(getSupportFragmentManager(),emojiFragment.getTag());
             }
         });
 
@@ -379,5 +393,10 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     @Override
     public void onAddTextButtonClick(Typeface typeface, String text, int color) {
         photoEditor.addText(typeface,text,color);
+    }
+
+    @Override
+    public void onEmojiSelected(String emoji) {
+        photoEditor.addEmoji(emoji);
     }
 }
