@@ -36,13 +36,16 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.yalantis.ucrop.UCrop;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
@@ -63,11 +66,13 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     FiltersListFragment filtersListFragment;
     EditImageFragment editImageFragment;
 
-    CardView btn_filters_list, btn_edit,btn_brush,btn_emoji , btn_text;
+    CardView btn_filters_list, btn_edit,btn_brush, btn_emoji, btn_text, btn_crop;
 
     int brightnessfinal = 0;
     float saturationfinal = 1.0f;
     float constraintfinal = 1.0f;
+
+    Uri image_selected_uri;
 
     static {
         System.loadLibrary("NativeImageProcessor");
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         btn_brush = (CardView)findViewById(R.id.btn_brush);
         btn_text = (CardView)findViewById(R.id.btn_text);
         btn_emoji = (CardView)findViewById(R.id.btn_emoji);
+        btn_crop = (CardView)findViewById(R.id.btn_crop);
         
 
         btn_filters_list.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +154,22 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             }
         });
 
+        btn_crop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startCrop(image_selected_uri);
+            }
+        });
+
         loadImage();
+    }
+
+    private void startCrop(Uri uri) {
+        String destinationFileName = new StringBuilder(UUID.randomUUID().toString()).append(".jpg").toString();
+
+        UCrop ucrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
+
+        ucrop.start(MainActivity.this);
     }
 
     private void loadImage() {
@@ -353,6 +374,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         if (resultCode == RESULT_OK && requestCode == PERMISSION_PICK_IMAGE) {
             Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 800, 800);
 
+            image_selected_uri = data.getData();
+
             originalBitmap.recycle();
             finalBitmap.recycle();
             filteredBitmap.recycle();
@@ -364,6 +387,39 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             bitmap.recycle();
 
             filtersListFragment.displayThumbnail(originalBitmap);
+        }
+        else if (requestCode == UCrop.REQUEST_CROP)
+        {
+            handleCropResult(data);
+        }
+        else if (requestCode == UCrop.RESULT_ERROR)
+        {
+            handleCropError(data);
+        }
+    }
+
+    private void handleCropError(Intent data) {
+        final Throwable cropError = UCrop.getError(data);
+
+        if (cropError != null)
+        {
+            Toast.makeText(this, "" + cropError.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        else 
+        {
+            Toast.makeText(this, "Unexpected Error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void handleCropResult(Intent data) {
+        final Uri resultUri = UCrop.getOutput(data);
+        if (resultUri != null)
+        {
+            photoEditorView.getSource().setImageURI(resultUri);
+        }
+        else
+        {
+            Toast.makeText(this, "Cannot retrieve crop image", Toast.LENGTH_SHORT).show();
         }
     }
 
