@@ -109,9 +109,15 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         btn_filters_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FiltersListFragment filtersListFragment = FiltersListFragment.getInstance();
-                filtersListFragment.setListener(MainActivity.this);
-                filtersListFragment.show(getSupportFragmentManager(), filtersListFragment.getTag());
+                if (filtersListFragment != null)
+                {
+                    filtersListFragment.show(getSupportFragmentManager(), filtersListFragment.getTag());
+                }
+                else {
+                    FiltersListFragment filtersListFragment = FiltersListFragment.getInstance(null);
+                    filtersListFragment.setListener(MainActivity.this);
+                    filtersListFragment.show(getSupportFragmentManager(), filtersListFragment.getTag());
+                }
             }
         });
 
@@ -237,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
     @Override
     public void onFilterSelected(Filter filter) {
-        resetControl();
+        //resetControl();
         filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
         photoEditorView.getSource().setImageBitmap(filter.processFilter(filteredBitmap));
         finalBitmap = filteredBitmap.copy(Bitmap.Config.ARGB_8888, true);
@@ -337,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     private void openImage(String path) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(path), "iamge/*");
+        intent.setDataAndType(Uri.parse(path), "image/*");
         startActivity(intent);
     }
 
@@ -386,7 +392,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             photoEditorView.getSource().setImageBitmap(originalBitmap);
             bitmap.recycle();
 
-            filtersListFragment.displayThumbnail(originalBitmap);
+            filtersListFragment =  FiltersListFragment.getInstance(originalBitmap);
+            filtersListFragment.setListener(this);
         }
         else if (requestCode == UCrop.REQUEST_CROP)
         {
