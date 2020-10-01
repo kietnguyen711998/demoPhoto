@@ -16,6 +16,7 @@
     <ja.burhanrashid52.photoeditor.PhotoEditorView
         android:id="@+id/image_preview"
         android:scaleType="centerCrop"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="360dp"/>
 
@@ -40,7 +41,7 @@
                 android:padding="16dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/card_background_color"
-                android:layout_width="80dp"
+                android:layout_width="65dp"
                 android:layout_height="80dp">
 
             <LinearLayout
@@ -74,7 +75,7 @@
                 android:padding="16dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/card_background_color"
-                android:layout_width="80dp"
+                android:layout_width="65dp"
                 android:layout_height="80dp">
 
                 <LinearLayout
@@ -108,7 +109,7 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="80dp"
+                android:layout_width="65dp"
                 android:layout_height="80dp">
 
                 <LinearLayout
@@ -142,7 +143,7 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="80dp"
+                android:layout_width="65dp"
                 android:layout_height="80dp">
 
                 <LinearLayout
@@ -176,7 +177,7 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="80dp"
+                android:layout_width="65dp"
                 android:layout_height="80dp">
 
                 <LinearLayout
@@ -210,7 +211,7 @@
                 android:padding="16dp"
                 app:cardBackgroundColor="@color/card_background_color"
                 app:cardElevation="0dp"
-                android:layout_width="80dp"
+                android:layout_width="65dp"
                 android:layout_height="80dp">
 
                 <LinearLayout
