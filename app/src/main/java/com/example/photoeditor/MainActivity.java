@@ -9,11 +9,13 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
     public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
+    private static final int CAMERA_REQUEST = 1001;
 
     PhotoEditor photoEditor;
     PhotoEditorView photoEditorView;
@@ -272,12 +275,48 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             openImageFromGallery();
             return true;
         }
-        if(id == R.id.action_save)
+        else if(id == R.id.action_save)
         {
             saveImageToGallery();
             return true;
         }
+        else if(id == R.id.action_camera)
+        {
+            openCamera();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openCamera() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted())
+                        {
+                            ContentValues values = new ContentValues();
+                            values.put(MediaStore.Images.Media.TITLE, "New picture");
+                            values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera");
+                            image_selected_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_selected_uri);
+                            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this, "Permission denied!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                })
+                .check();
     }
 
     private void saveImageToGallery() {
@@ -377,23 +416,41 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PERMISSION_PICK_IMAGE) {
-            Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 800, 800);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PERMISSION_PICK_IMAGE) {
+                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 800, 800);
 
-            image_selected_uri = data.getData();
+                image_selected_uri = data.getData();
 
-            originalBitmap.recycle();
-            finalBitmap.recycle();
-            filteredBitmap.recycle();
+                originalBitmap.recycle();
+                finalBitmap.recycle();
+                filteredBitmap.recycle();
 
-            originalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-            finalBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
-            filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
-            photoEditorView.getSource().setImageBitmap(originalBitmap);
-            bitmap.recycle();
+                originalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                finalBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                photoEditorView.getSource().setImageBitmap(originalBitmap);
+                bitmap.recycle();
 
-            filtersListFragment =  FiltersListFragment.getInstance(originalBitmap);
-            filtersListFragment.setListener(this);
+                filtersListFragment = FiltersListFragment.getInstance(originalBitmap);
+                filtersListFragment.setListener(this);
+            }
+            if (requestCode == CAMERA_REQUEST) {
+                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, image_selected_uri, 800, 800);
+
+                originalBitmap.recycle();
+                finalBitmap.recycle();
+                filteredBitmap.recycle();
+
+                originalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                finalBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                photoEditorView.getSource().setImageBitmap(originalBitmap);
+                bitmap.recycle();
+
+                filtersListFragment =  FiltersListFragment.getInstance(originalBitmap);
+                filtersListFragment.setListener(this);
+            }
         }
         else if (requestCode == UCrop.REQUEST_CROP)
         {
