@@ -13,6 +13,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -480,6 +481,11 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         if (resultUri != null)
         {
             photoEditorView.getSource().setImageURI(resultUri);
+
+            Bitmap bitmap = ((BitmapDrawable)photoEditorView.getSource().getDrawable()).getBitmap();
+            originalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            filteredBitmap = originalBitmap;
+            finalBitmap = originalBitmap;
         }
         else
         {
