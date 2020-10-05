@@ -39,6 +39,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.yalantis.ucrop.UCrop;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
     public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
+    public static final int PERMISSION_INSERT_IMAGE = 1001;
     private static final int CAMERA_REQUEST = 1001;
 
     PhotoEditor photoEditor;
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     FiltersListFragment filtersListFragment;
     EditImageFragment editImageFragment;
 
-    CardView btn_filters_list, btn_edit,btn_brush, btn_emoji, btn_text, btn_crop;
+    CardView btn_filters_list, btn_edit,btn_brush, btn_emoji, btn_text,btn_add_image, btn_crop;
 
     int brightnessfinal = 0;
     float saturationfinal = 1.0f;
@@ -108,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         btn_text = (CardView)findViewById(R.id.btn_text);
         btn_emoji = (CardView)findViewById(R.id.btn_emoji);
         btn_crop = (CardView)findViewById(R.id.btn_crop);
-        
+        btn_add_image = (CardView)findViewById(R.id.btn_add_image);
+
 
         btn_filters_list.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +174,35 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             }
         });
 
+        btn_add_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addImageToPicture();
+            }
+        });
+
         loadImage();
+    }
+
+    private void addImageToPicture() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if(report.areAllPermissionsGranted()){
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType("image/*");
+                            startActivityForResult(intent,PERMISSION_INSERT_IMAGE);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    }
+                }).check();
     }
 
     private void startCrop(Uri uri) {
@@ -435,6 +466,11 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
                 filtersListFragment = FiltersListFragment.getInstance(originalBitmap);
                 filtersListFragment.setListener(this);
+            }
+            else if(requestCode == PERMISSION_INSERT_IMAGE)
+            {
+                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this,data.getData(), 250, 250 );
+                photoEditor.addImage(bitmap);
             }
             if (requestCode == CAMERA_REQUEST) {
                 Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, image_selected_uri, 800, 800);

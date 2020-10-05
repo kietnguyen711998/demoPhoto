@@ -206,6 +206,40 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btn_add_image"
+                android:layout_margin="5dp"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/card_background_color"
+                app:cardElevation="0dp"
+                android:layout_width="65dp"
+                android:layout_height="80dp">
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_broken_image_white_24" />
+
+                    <TextView
+                        android:text="Image"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/btn_crop"
                 android:layout_margin="5dp"
                 android:padding="16dp"
