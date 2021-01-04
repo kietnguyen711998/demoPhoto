@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
     public static final int PERMISSION_INSERT_IMAGE = 1001;
-    private static final int CAMERA_REQUEST = 1001;
+    private static final int CAMERA_REQUEST = 1002;
 
     PhotoEditor photoEditor;
     PhotoEditorView photoEditorView;
