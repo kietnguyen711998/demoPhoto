@@ -488,10 +488,10 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
                 filtersListFragment =  FiltersListFragment.getInstance(originalBitmap);
                 filtersListFragment.setListener(this);
             }
-        }
-        else if (requestCode == UCrop.REQUEST_CROP)
-        {
-            handleCropResult(data);
+            else if (requestCode == UCrop.REQUEST_CROP)
+            {
+                handleCropResult(data);
+            }
         }
         else if (requestCode == UCrop.RESULT_ERROR)
         {
