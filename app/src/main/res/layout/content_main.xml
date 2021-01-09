@@ -29,6 +29,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/edit_side"
             android:background="@color/card_background_color"
             android:orientation="horizontal"
             android:padding="10dp"

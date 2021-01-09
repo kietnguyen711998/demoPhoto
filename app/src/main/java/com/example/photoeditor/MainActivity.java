@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -73,10 +74,13 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     EditImageFragment editImageFragment;
 
     CardView btn_filters_list, btn_edit,btn_brush, btn_emoji, btn_text,btn_add_image, btn_crop;
+    LinearLayout edit_side;
 
     int brightnessfinal = 0;
     float saturationfinal = 1.0f;
     float constraintfinal = 1.0f;
+
+    boolean onEdit = false;
 
     Uri image_selected_uri;
 
@@ -103,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
+        edit_side = (LinearLayout)findViewById(R.id.edit_side);
+        edit_side.setVisibility(View.INVISIBLE);
 
         btn_filters_list = (CardView)findViewById(R.id.btn_filter_list);
         btn_edit = (CardView)findViewById(R.id.btn_edit);
@@ -140,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         btn_brush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Enable brush mode
                 photoEditor.setBrushDrawingMode(true);
 
                 BrushFragment brushFragment = BrushFragment.getInstance();
@@ -307,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             openImageFromGallery();
             return true;
         }
-        else if(id == R.id.action_save)
+        else if(id == R.id.action_save && onEdit)
         {
             saveImageToGallery();
             return true;
@@ -449,6 +454,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            edit_side.setVisibility(View.VISIBLE);
+            onEdit = true;
             if (requestCode == PERMISSION_PICK_IMAGE) {
                 Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), 800, 800);
 
