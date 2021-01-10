@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
     android:background="@color/black_background"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main"
@@ -16,22 +15,26 @@
     <ja.burhanrashid52.photoeditor.PhotoEditorView
         android:id="@+id/image_preview"
         android:scaleType="centerCrop"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_rowWeight="1"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="360dp"/>
+        android:layout_height="wrap_content"/>
 
     <HorizontalScrollView
-        android:layout_alignParentBottom="true"
         android:fillViewport="true"
+        android:layout_row="1"
+        android:layout_column="0"
         android:measureAllChildren="false"
         android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent">
 
         <LinearLayout
             android:id="@+id/edit_side"
             android:background="@color/card_background_color"
             android:orientation="horizontal"
+            android:layout_gravity="bottom"
             android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -278,4 +281,4 @@
 
     </HorizontalScrollView>
 
-</RelativeLayout>
+</GridLayout>

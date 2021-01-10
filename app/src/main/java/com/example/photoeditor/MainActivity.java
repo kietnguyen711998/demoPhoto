@@ -67,7 +67,7 @@ public class MainActivity
     public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
     public static final int PERMISSION_INSERT_IMAGE = 1001;
-    private static final int CAMERA_REQUEST = 1002;
+    public static final int CAMERA_REQUEST = 1002;
 
     PhotoEditor photoEditor;
     PhotoEditorView photoEditorView;
@@ -102,8 +102,8 @@ public class MainActivity
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setTitle("PhotoEditor");
-        getSupportActionBar().setIcon(R.drawable.ic_app_logo);
+        getSupportActionBar().setTitle("    PhotoEditor");
+        getSupportActionBar().setIcon(R.mipmap.ic_final_app_logo);
 
         photoEditorView = (PhotoEditorView) findViewById(R.id.image_preview);
         photoEditor = new PhotoEditor.Builder(this, photoEditorView)
@@ -193,6 +193,12 @@ public class MainActivity
         });
 
         loadImage();
+
+        image_selected_uri = getIntent().getData();
+        if (image_selected_uri != null)
+        {
+            setData(image_selected_uri);
+        }
     }
 
     private void addImageToPicture() {
@@ -455,6 +461,26 @@ public class MainActivity
                     }
                 })
         .check();
+    }
+
+    private void setData(Uri uri)
+    {
+        edit_side.setVisibility(View.VISIBLE);
+        onEdit = true;
+        Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, uri, 800, 800);
+
+        originalBitmap.recycle();
+        finalBitmap.recycle();
+        filteredBitmap.recycle();
+
+        originalBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        finalBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        filteredBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        photoEditorView.getSource().setImageBitmap(originalBitmap);
+        bitmap.recycle();
+
+        filtersListFragment = FiltersListFragment.getInstance(originalBitmap);
+        filtersListFragment.setListener(this);
     }
 
     @Override
