@@ -5,5 +5,4 @@ public interface BrushFragmentListener {
     void onBrushOpacityChangeListener(int opacity);
     void onBrushColorChangeListener(int color);
     void onBrushStateChangeListener(boolean isEraser);
-
 }
