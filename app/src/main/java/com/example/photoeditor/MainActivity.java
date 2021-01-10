@@ -55,7 +55,13 @@ import ja.burhanrashid52.photoeditor.OnSaveBitmap;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
 
-public class MainActivity extends AppCompatActivity implements FiltersListFragmentListener, EditImageFragmentListener, BrushFragmentListener, AddTextFragmentListener, EmojiFragmentListener {
+public class MainActivity
+        extends AppCompatActivity
+        implements FiltersListFragmentListener,
+                    EditImageFragmentListener,
+                    BrushFragmentListener,
+                    AddTextFragmentListener,
+                    EmojiFragmentListener {
 
     public static final String pictureName = "IU.jpg";
     public static final int PERMISSION_PICK_IMAGE = 1000;
@@ -364,6 +370,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
                                 @Override
                                 public void onBitmapReady(Bitmap saveBitmap) {
                                     try {
+                                        finalBitmap = saveBitmap;
 
                                         photoEditorView.getSource().setImageBitmap(saveBitmap);
 
