@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -25,7 +26,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -34,7 +35,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'info.androidhive:imagefilters:1.0.7'
-    implementation 'ja.burhanrashid52:photoeditor:0.2.1'
+    implementation 'ja.burhanrashid52:photoeditor:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'io.github.rockerhieu:emojiconize:1.0.0'
 
